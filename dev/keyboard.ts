@@ -15,8 +15,11 @@ class Keyboard{
             switch(event.keyCode){
                 case this.upKey:
                     console.log("Up key is pressed");
-                    this.bob.ySpeed = 5;
-                    this.bob.behaviour = new Jumping(this.bob);
+                    if(this.bob.inAir == false){
+                        this.bob.ySpeed = 20;
+                        this.bob.behaviour = new Jumping(this.bob);
+                        this.bob.inAir = true;
+                    }
                     break;
                 case this.leftKey:
                     console.log("Left key is pressed");

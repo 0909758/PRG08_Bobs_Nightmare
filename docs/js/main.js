@@ -4,6 +4,8 @@ var Bob = (function () {
         this.y = 500;
         this.xSpeed = 0;
         this.ySpeed = 0;
+        this.gravity = 1;
+        this.inAir = false;
         var container = document.getElementById("container");
         this.div = document.createElement("bob");
         container.appendChild(this.div);
@@ -44,7 +46,12 @@ var Jumping = (function () {
     }
     Jumping.prototype.move = function () {
         this.bob.y -= this.bob.ySpeed;
-        this.bob.x + this.bob.xSpeed;
+        this.bob.x -= this.bob.xSpeed;
+        this.bob.ySpeed -= this.bob.gravity;
+        if (this.bob.y >= 500) {
+            this.bob.behaviour = new Running(this.bob);
+            this.bob.inAir = false;
+        }
     };
     return Jumping;
 }());
@@ -62,8 +69,11 @@ var Keyboard = (function () {
         switch (event.keyCode) {
             case this.upKey:
                 console.log("Up key is pressed");
-                this.bob.ySpeed = 5;
-                this.bob.behaviour = new Jumping(this.bob);
+                if (this.bob.inAir == false) {
+                    this.bob.ySpeed = 20;
+                    this.bob.behaviour = new Jumping(this.bob);
+                    this.bob.inAir = true;
+                }
                 break;
             case this.leftKey:
                 console.log("Left key is pressed");
