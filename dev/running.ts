@@ -6,6 +6,6 @@ class Running implements Behaviour{
     }
 
     public move():void{
-        this.bob.x -= this.bob.runningSpeed;
+        this.bob.x -= this.bob.xSpeed;
     }
 }

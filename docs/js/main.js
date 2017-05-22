@@ -2,8 +2,8 @@ var Bob = (function () {
     function Bob() {
         this.x = 650;
         this.y = 500;
-        this.runningSpeed = 0;
-        this.jumpingSpeed = 0;
+        this.xSpeed = 0;
+        this.ySpeed = 0;
         var container = document.getElementById("container");
         this.div = document.createElement("bob");
         container.appendChild(this.div);
@@ -43,44 +43,50 @@ var Jumping = (function () {
         this.bob = b;
     }
     Jumping.prototype.move = function () {
-        this.bob.y -= this.bob.jumpingSpeed;
+        this.bob.y -= this.bob.ySpeed;
+        this.bob.x + this.bob.xSpeed;
     };
     return Jumping;
 }());
 var Keyboard = (function () {
     function Keyboard(b) {
         var _this = this;
+        this.upKey = 38;
+        this.leftKey = 37;
+        this.rightKey = 39;
         this.bob = b;
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
         window.addEventListener("keyup", function (e) { return _this.onKeyUp(e); });
     }
     Keyboard.prototype.onKeyDown = function (event) {
         switch (event.keyCode) {
-            case 38:
+            case this.upKey:
                 console.log("Up key is pressed");
+                this.bob.ySpeed = 5;
+                this.bob.behaviour = new Jumping(this.bob);
                 break;
-            case 37:
+            case this.leftKey:
                 console.log("Left key is pressed");
-                this.bob.runningSpeed = 5;
+                this.bob.xSpeed = 5;
                 break;
-            case 39:
+            case this.rightKey:
                 console.log("Right key is pressed");
-                this.bob.runningSpeed = -5;
+                this.bob.xSpeed = -5;
                 break;
         }
     };
     Keyboard.prototype.onKeyUp = function (event) {
         switch (event.keyCode) {
-            case 38:
+            case this.upKey:
                 console.log("Up key is pressed");
                 break;
-            case 37:
+            case this.leftKey:
                 console.log("Left key is pressed");
-                this.bob.runningSpeed = 0;
+                this.bob.xSpeed = 0;
                 break;
-            case 39:
+            case this.rightKey:
                 console.log("Right key is pressed");
-                this.bob.runningSpeed = 0;
+                this.bob.xSpeed = 0;
                 break;
         }
     };
@@ -94,7 +100,7 @@ var Running = (function () {
         this.bob = b;
     }
     Running.prototype.move = function () {
-        this.bob.x -= this.bob.runningSpeed;
+        this.bob.x -= this.bob.xSpeed;
     };
     return Running;
 }());

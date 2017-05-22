@@ -1,6 +1,10 @@
 class Keyboard{
     private bob:Bob;
 
+    private upKey:number = 38;
+    private leftKey:number = 37;
+    private rightKey:number = 39;
+
     constructor(b:Bob){
         this.bob = b;
         window.addEventListener("keydown", (e:KeyboardEvent) => this.onKeyDown(e));
@@ -9,32 +13,34 @@ class Keyboard{
 
     private onKeyDown(event:KeyboardEvent):void {
             switch(event.keyCode){
-                case 38:
+                case this.upKey:
                     console.log("Up key is pressed");
+                    this.bob.ySpeed = 5;
+                    this.bob.behaviour = new Jumping(this.bob);
                     break;
-                case 37:
+                case this.leftKey:
                     console.log("Left key is pressed");
-                    this.bob.runningSpeed = 5;
+                    this.bob.xSpeed = 5;
                     break;
-                case 39:
+                case this.rightKey:
                     console.log("Right key is pressed");
-                    this.bob.runningSpeed = -5;
+                    this.bob.xSpeed = -5;
                     break;
             }
     }
 
     private onKeyUp(event:KeyboardEvent):void {
         switch(event.keyCode){
-                case 38:
+                case this.upKey:
                     console.log("Up key is pressed");
                     break;
-                case 37:
+                case this.leftKey:
                     console.log("Left key is pressed");
-                    this.bob.runningSpeed = 0;
+                    this.bob.xSpeed = 0;
                     break;
-                case 39:
+                case this.rightKey:
                     console.log("Right key is pressed");
-                    this.bob.runningSpeed = 0;
+                    this.bob.xSpeed = 0;
                     break;
             }
     }

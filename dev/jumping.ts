@@ -6,6 +6,7 @@ class Jumping implements Behaviour{
     }
 
     public move():void{
-        this.bob.y -= this.bob.jumpingSpeed;
+        this.bob.y -= this.bob.ySpeed;
+        this.bob.x + this.bob.xSpeed;
     }
 }

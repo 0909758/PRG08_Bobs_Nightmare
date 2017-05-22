@@ -5,8 +5,8 @@ class Bob {
 
     public x:number = 650;
     public y:number = 500;
-    public runningSpeed:number = 0;
-    public jumpingSpeed:number = 0;
+    public xSpeed:number = 0;
+    public ySpeed:number = 0;
 
     constructor(){
         let container:HTMLElement = document.getElementById("container");
