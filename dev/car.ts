@@ -2,6 +2,6 @@
 
 class Car extends GameObject{
     constructor(){
-        super("car", document.getElementById("container"), 145, 50, 650, 500, 0, 0);
+        super("car", document.getElementById("container"), 145, 50, 25, 520, 0, 0);
     }
 }

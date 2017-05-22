@@ -18,7 +18,7 @@ var GameObject = (function () {
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
         parent.appendChild(this.div);
-        this.div.style.transform = "translate(" + this.x + "px" + this.y + "px)";
+        this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     }
     return GameObject;
 }());
@@ -44,7 +44,7 @@ var Bob = (function (_super) {
 var Car = (function (_super) {
     __extends(Car, _super);
     function Car() {
-        return _super.call(this, "car", document.getElementById("container"), 145, 50, 650, 500, 0, 0) || this;
+        return _super.call(this, "car", document.getElementById("container"), 145, 50, 25, 520, 0, 0) || this;
     }
     return Car;
 }(GameObject));

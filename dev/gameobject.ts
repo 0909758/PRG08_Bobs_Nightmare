@@ -17,6 +17,6 @@ class GameObject{
         this.ySpeed = ySpeed;
 
         parent.appendChild(this.div);
-        this.div.style.transform = "translate("+this.x+"px"+this.y+"px)";
+        this.div.style.transform = "translate("+this.x+"px, "+this.y+"px)";
     }
 }

@@ -23,7 +23,7 @@ container {
     overflow:hidden;
 }
 
-bob{
+bob {
     background-image: url(../images/bob.png);
     width: 55px; height: 66px;
 }

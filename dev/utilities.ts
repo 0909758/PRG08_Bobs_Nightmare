@@ -4,5 +4,5 @@ class Utilities{
                 a.x + a.width > b.x &&
                 a.y < b.y + b.height &&
                 a.height + a.y > b.y)
-}
+    }
 }
