@@ -16,6 +16,10 @@ var Bob = (function () {
         this.behaviour.move();
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     };
+    Bob.prototype.die = function () {
+        var g = Game.getInstance();
+        g.endGame();
+    };
     return Bob;
 }());
 var Game = (function () {
@@ -31,6 +35,7 @@ var Game = (function () {
         requestAnimationFrame(function () { return _this.gameLoop(); });
     };
     Game.prototype.endGame = function () {
+        console.log("Bob died! :(");
     };
     Game.getInstance = function () {
         if (!Game.instance) {

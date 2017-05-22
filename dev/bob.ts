@@ -23,4 +23,9 @@ class Bob {
         this.behaviour.move();
         this.div.style.transform = "translate("+this.x+"px, "+this.y+"px)";
     }
+
+    private die(){
+        let g = Game.getInstance();
+        g.endGame();
+    }
 }

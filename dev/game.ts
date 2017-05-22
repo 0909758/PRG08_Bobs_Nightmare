@@ -15,7 +15,8 @@ class Game{
         requestAnimationFrame(() => this.gameLoop());
     }
 
-    private endGame(){
+    public endGame(){
+        console.log("Bob died! :(");
     }
 
     public static getInstance(){
