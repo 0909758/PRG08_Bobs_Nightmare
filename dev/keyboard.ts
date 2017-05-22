@@ -14,7 +14,6 @@ class Keyboard{
     private onKeyDown(event:KeyboardEvent):void {
             switch(event.keyCode){
                 case this.upKey:
-                    console.log("Up key is pressed");
                     if(this.bob.inAir == false){
                         this.bob.ySpeed = 20;
                         this.bob.behaviour = new Jumping(this.bob);
@@ -22,11 +21,9 @@ class Keyboard{
                     }
                     break;
                 case this.leftKey:
-                    console.log("Left key is pressed");
                     this.bob.xSpeed = 5;
                     break;
                 case this.rightKey:
-                    console.log("Right key is pressed");
                     this.bob.xSpeed = -5;
                     break;
             }
@@ -35,14 +32,11 @@ class Keyboard{
     private onKeyUp(event:KeyboardEvent):void {
         switch(event.keyCode){
                 case this.upKey:
-                    console.log("Up key is pressed");
                     break;
                 case this.leftKey:
-                    console.log("Left key is pressed");
                     this.bob.xSpeed = 0;
                     break;
                 case this.rightKey:
-                    console.log("Right key is pressed");
                     this.bob.xSpeed = 0;
                     break;
             }

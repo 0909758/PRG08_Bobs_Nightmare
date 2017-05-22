@@ -1,16 +1,35 @@
-var Bob = (function () {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var GameObject = (function () {
+    function GameObject(tag, parent, width, height, x, y, xSpeed, ySpeed) {
+        this.div = document.createElement(tag);
+        this.width = width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
+        this.xSpeed = xSpeed;
+        this.ySpeed = ySpeed;
+        parent.appendChild(this.div);
+        this.div.style.transform = "translate(" + this.x + "px" + this.y + "px)";
+    }
+    return GameObject;
+}());
+var Bob = (function (_super) {
+    __extends(Bob, _super);
     function Bob() {
-        this.x = 650;
-        this.y = 500;
-        this.xSpeed = 0;
-        this.ySpeed = 0;
-        this.gravity = 1;
-        this.inAir = false;
-        var container = document.getElementById("container");
-        this.div = document.createElement("bob");
-        container.appendChild(this.div);
-        this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
-        this.behaviour = new Running(this);
+        var _this = _super.call(this, "bob", document.getElementById("container"), 55, 66, 650, 500, 0, 0) || this;
+        _this.gravity = 1;
+        _this.inAir = false;
+        _this.behaviour = new Running(_this);
+        return _this;
     }
     Bob.prototype.move = function () {
         this.behaviour.move();
@@ -21,17 +40,28 @@ var Bob = (function () {
         g.endGame();
     };
     return Bob;
-}());
+}(GameObject));
+var Car = (function (_super) {
+    __extends(Car, _super);
+    function Car() {
+        return _super.call(this, "car", document.getElementById("container"), 145, 50, 650, 500, 0, 0) || this;
+    }
+    return Car;
+}(GameObject));
 var Game = (function () {
     function Game() {
         var _this = this;
         this.bob = new Bob();
+        this.car = new Car();
         this.keyboard = new Keyboard(this.bob);
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
     Game.prototype.gameLoop = function () {
         var _this = this;
         this.bob.move();
+        if (Utilities.checkCollision(this.bob, this.car)) {
+            console.log("Collision!");
+        }
         requestAnimationFrame(function () { return _this.gameLoop(); });
     };
     Game.prototype.endGame = function () {
@@ -73,7 +103,6 @@ var Keyboard = (function () {
     Keyboard.prototype.onKeyDown = function (event) {
         switch (event.keyCode) {
             case this.upKey:
-                console.log("Up key is pressed");
                 if (this.bob.inAir == false) {
                     this.bob.ySpeed = 20;
                     this.bob.behaviour = new Jumping(this.bob);
@@ -81,11 +110,9 @@ var Keyboard = (function () {
                 }
                 break;
             case this.leftKey:
-                console.log("Left key is pressed");
                 this.bob.xSpeed = 5;
                 break;
             case this.rightKey:
-                console.log("Right key is pressed");
                 this.bob.xSpeed = -5;
                 break;
         }
@@ -93,14 +120,11 @@ var Keyboard = (function () {
     Keyboard.prototype.onKeyUp = function (event) {
         switch (event.keyCode) {
             case this.upKey:
-                console.log("Up key is pressed");
                 break;
             case this.leftKey:
-                console.log("Left key is pressed");
                 this.bob.xSpeed = 0;
                 break;
             case this.rightKey:
-                console.log("Right key is pressed");
                 this.bob.xSpeed = 0;
                 break;
         }
@@ -118,5 +142,16 @@ var Running = (function () {
         this.bob.x -= this.bob.xSpeed;
     };
     return Running;
+}());
+var Utilities = (function () {
+    function Utilities() {
+    }
+    Utilities.checkCollision = function (a, b) {
+        return (a.x < b.x + b.width &&
+            a.x + a.width > b.x &&
+            a.y < b.y + b.height &&
+            a.height + a.y > b.y);
+    };
+    return Utilities;
 }());
 //# sourceMappingURL=main.js.map
