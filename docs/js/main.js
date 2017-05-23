@@ -27,8 +27,10 @@ var Bob = (function (_super) {
     function Bob() {
         var _this = _super.call(this, "bob", document.getElementById("container"), 55, 66, 650, 500, 0, 0) || this;
         _this.gravity = 1;
-        _this.inAir = false;
+        _this.jumping = false;
         _this.facingLeft = true;
+        _this.movingLeft = false;
+        _this.movingRight = false;
         _this.behaviour = new Running(_this);
         return _this;
     }
@@ -87,13 +89,28 @@ var Jumping = (function () {
         this.bob = b;
     }
     Jumping.prototype.move = function () {
-        this.bob.y -= this.bob.ySpeed;
-        this.bob.x -= this.bob.xSpeed;
-        this.bob.ySpeed -= this.bob.gravity;
-        if (this.bob.y >= 500) {
-            this.bob.behaviour = new Running(this.bob);
-            this.bob.inAir = false;
+        if (this.bob.jumping == false) {
+            this.bob.ySpeed = 20;
+            this.bob.jumping = true;
         }
+        if (this.bob.jumping == true) {
+            this.bob.y -= this.bob.ySpeed;
+            this.bob.ySpeed -= this.bob.gravity;
+            if (this.bob.y >= 500) {
+                this.bob.jumping = false;
+                this.bob.behaviour = new Running(this.bob);
+            }
+        }
+        if (this.bob.movingLeft == true) {
+            this.bob.xSpeed = 5;
+        }
+        else if (this.bob.movingRight == true) {
+            this.bob.xSpeed = -5;
+        }
+        else {
+            this.bob.xSpeed = 0;
+        }
+        this.bob.x -= this.bob.xSpeed;
     };
     return Jumping;
 }());
@@ -112,30 +129,32 @@ var Keyboard = (function () {
     Keyboard.prototype.onKeyDown = function (event) {
         switch (event.keyCode) {
             case this.upKey:
-                if (this.bob.inAir == false) {
-                    this.bob.ySpeed = 20;
+                if (this.bob.jumping == false) {
                     this.bob.behaviour = new Jumping(this.bob);
-                    this.bob.inAir = true;
                 }
                 break;
             case this.leftKey:
                 if (this.rightKeyPressed == true) {
-                    this.bob.xSpeed = 0;
+                    this.bob.movingLeft = false;
+                    this.bob.movingRight = false;
                     this.leftKeyPressed = true;
                 }
                 else {
-                    this.bob.xSpeed = 5;
+                    this.bob.movingLeft = true;
+                    this.bob.movingRight = false;
                     this.bob.facingLeft = true;
                     this.leftKeyPressed = true;
                 }
                 break;
             case this.rightKey:
                 if (this.leftKeyPressed == true) {
-                    this.bob.xSpeed = 0;
+                    this.bob.movingLeft = false;
+                    this.bob.movingRight = false;
                     this.rightKeyPressed = true;
                 }
                 else {
-                    this.bob.xSpeed = -5;
+                    this.bob.movingLeft = false;
+                    this.bob.movingRight = true;
                     this.bob.facingLeft = false;
                     this.rightKeyPressed = true;
                 }
@@ -148,23 +167,27 @@ var Keyboard = (function () {
                 break;
             case this.leftKey:
                 if (this.rightKeyPressed == true) {
-                    this.bob.xSpeed = -5;
+                    this.bob.movingLeft = false;
+                    this.bob.movingRight = true;
                     this.bob.facingLeft = false;
                     this.leftKeyPressed = false;
                 }
                 else {
-                    this.bob.xSpeed = 0;
+                    this.bob.movingLeft = false;
+                    this.bob.movingRight = false;
                     this.leftKeyPressed = false;
                 }
                 break;
             case this.rightKey:
                 if (this.leftKeyPressed == true) {
-                    this.bob.xSpeed = 5;
+                    this.bob.movingLeft = true;
+                    this.bob.movingRight = false;
                     this.bob.facingLeft = true;
                     this.rightKeyPressed = false;
                 }
                 else {
-                    this.bob.xSpeed = 0;
+                    this.bob.movingLeft = false;
+                    this.bob.movingRight = false;
                     this.rightKeyPressed = false;
                 }
                 break;
@@ -180,6 +203,15 @@ var Running = (function () {
         this.bob = b;
     }
     Running.prototype.move = function () {
+        if (this.bob.movingLeft == true) {
+            this.bob.xSpeed = 5;
+        }
+        else if (this.bob.movingRight == true) {
+            this.bob.xSpeed = -5;
+        }
+        else {
+            this.bob.xSpeed = 0;
+        }
         this.bob.x -= this.bob.xSpeed;
     };
     return Running;

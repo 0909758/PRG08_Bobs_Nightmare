@@ -8,12 +8,18 @@ class Game{
     private constructor() {
         this.bob = new Bob();
         this.car = new Car();
+
+        // Adding keyboard controls for bob
         this.keyboard = new Keyboard(this.bob);
         requestAnimationFrame(() => this.gameLoop());
     }
 
     private gameLoop(){
+
+        // Calling bob's move function to keep checken if he's moving or not
         this.bob.move();
+
+        // Collision detection test with the lego car. (Check your console log)
         if(Utilities.checkCollision(this.bob, this.car)){
             console.log("Collision!");
         }

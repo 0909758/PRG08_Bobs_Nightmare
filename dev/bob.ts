@@ -3,9 +3,16 @@
 class Bob extends GameObject{
     public behaviour:Behaviour;
 
+    // Variables used by bob's jumping behavior
     public gravity:number = 1;
-    public inAir:boolean = false;
+    public jumping:boolean = false;
+
+    // Variable to determine bob's facing direction to flip image correctly.
     public facingLeft:boolean = true;
+
+    // Variables to determine bob's direction of movement.
+    public movingLeft:boolean = false;
+    public movingRight:boolean = false;
 
     constructor(){
         super("bob", document.getElementById("container"), 55, 66, 650, 500, 0, 0);
