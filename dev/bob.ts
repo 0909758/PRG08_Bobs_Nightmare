@@ -5,6 +5,7 @@ class Bob extends GameObject{
 
     public gravity:number = 1;
     public inAir:boolean = false;
+    public facingLeft:boolean = true;
 
     constructor(){
         super("bob", document.getElementById("container"), 55, 66, 650, 500, 0, 0);
@@ -13,8 +14,14 @@ class Bob extends GameObject{
     }
 
     public move(){
-        this.behaviour.move();
-        this.div.style.transform = "translate("+this.x+"px, "+this.y+"px)";
+        if(this.facingLeft == true){
+            this.behaviour.move();
+            this.div.style.transform = "translate("+this.x+"px, "+this.y+"px) scaleX(1)";
+        }
+        else{
+            this.behaviour.move();
+            this.div.style.transform = "translate("+this.x+"px, "+this.y+"px) scaleX(-1)";
+        }
     }
 
     private die(){

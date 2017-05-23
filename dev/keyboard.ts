@@ -5,6 +5,9 @@ class Keyboard{
     private leftKey:number = 37;
     private rightKey:number = 39;
 
+    private rightKeyPressed:boolean = false;
+    private leftKeyPressed:boolean = false;
+
     constructor(b:Bob){
         this.bob = b;
         window.addEventListener("keydown", (e:KeyboardEvent) => this.onKeyDown(e));
@@ -21,10 +24,27 @@ class Keyboard{
                     }
                     break;
                 case this.leftKey:
-                    this.bob.xSpeed = 5;
+                    if(this.rightKeyPressed == true){
+                        this.bob.xSpeed = 0;
+                        this.leftKeyPressed = true;
+                    }
+                    else{
+                        this.bob.xSpeed = 5;
+                        this.bob.facingLeft = true;
+                        this.leftKeyPressed = true;
+                    }
+                    
                     break;
                 case this.rightKey:
-                    this.bob.xSpeed = -5;
+                    if(this.leftKeyPressed == true){
+                        this.bob.xSpeed = 0;
+                        this.rightKeyPressed = true;
+                    }
+                    else{
+                        this.bob.xSpeed = -5;
+                        this.bob.facingLeft = false;
+                        this.rightKeyPressed = true;
+                    }
                     break;
             }
     }
@@ -34,12 +54,27 @@ class Keyboard{
                 case this.upKey:
                     break;
                 case this.leftKey:
-                    this.bob.xSpeed = 0;
+                    if(this.rightKeyPressed == true){
+                        this.bob.xSpeed = -5;
+                        this.bob.facingLeft = false;
+                        this.leftKeyPressed = false;
+                    }
+                    else{
+                        this.bob.xSpeed = 0;
+                        this.leftKeyPressed = false;
+                    }
                     break;
                 case this.rightKey:
-                    this.bob.xSpeed = 0;
+                    if(this.leftKeyPressed ==true){
+                        this.bob.xSpeed = 5;
+                        this.bob.facingLeft = true;
+                        this.rightKeyPressed = false;
+                    }
+                    else{
+                        this.bob.xSpeed = 0;
+                        this.rightKeyPressed = false;
+                    }
                     break;
             }
     }
-    
 }

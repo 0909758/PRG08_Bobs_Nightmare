@@ -28,12 +28,19 @@ var Bob = (function (_super) {
         var _this = _super.call(this, "bob", document.getElementById("container"), 55, 66, 650, 500, 0, 0) || this;
         _this.gravity = 1;
         _this.inAir = false;
+        _this.facingLeft = true;
         _this.behaviour = new Running(_this);
         return _this;
     }
     Bob.prototype.move = function () {
-        this.behaviour.move();
-        this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
+        if (this.facingLeft == true) {
+            this.behaviour.move();
+            this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(1)";
+        }
+        else {
+            this.behaviour.move();
+            this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(-1)";
+        }
     };
     Bob.prototype.die = function () {
         var g = Game.getInstance();
@@ -96,6 +103,8 @@ var Keyboard = (function () {
         this.upKey = 38;
         this.leftKey = 37;
         this.rightKey = 39;
+        this.rightKeyPressed = false;
+        this.leftKeyPressed = false;
         this.bob = b;
         window.addEventListener("keydown", function (e) { return _this.onKeyDown(e); });
         window.addEventListener("keyup", function (e) { return _this.onKeyUp(e); });
@@ -110,10 +119,26 @@ var Keyboard = (function () {
                 }
                 break;
             case this.leftKey:
-                this.bob.xSpeed = 5;
+                if (this.rightKeyPressed == true) {
+                    this.bob.xSpeed = 0;
+                    this.leftKeyPressed = true;
+                }
+                else {
+                    this.bob.xSpeed = 5;
+                    this.bob.facingLeft = true;
+                    this.leftKeyPressed = true;
+                }
                 break;
             case this.rightKey:
-                this.bob.xSpeed = -5;
+                if (this.leftKeyPressed == true) {
+                    this.bob.xSpeed = 0;
+                    this.rightKeyPressed = true;
+                }
+                else {
+                    this.bob.xSpeed = -5;
+                    this.bob.facingLeft = false;
+                    this.rightKeyPressed = true;
+                }
                 break;
         }
     };
@@ -122,10 +147,26 @@ var Keyboard = (function () {
             case this.upKey:
                 break;
             case this.leftKey:
-                this.bob.xSpeed = 0;
+                if (this.rightKeyPressed == true) {
+                    this.bob.xSpeed = -5;
+                    this.bob.facingLeft = false;
+                    this.leftKeyPressed = false;
+                }
+                else {
+                    this.bob.xSpeed = 0;
+                    this.leftKeyPressed = false;
+                }
                 break;
             case this.rightKey:
-                this.bob.xSpeed = 0;
+                if (this.leftKeyPressed == true) {
+                    this.bob.xSpeed = 5;
+                    this.bob.facingLeft = true;
+                    this.rightKeyPressed = false;
+                }
+                else {
+                    this.bob.xSpeed = 0;
+                    this.rightKeyPressed = false;
+                }
                 break;
         }
     };
