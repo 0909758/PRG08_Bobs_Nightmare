@@ -33,6 +33,7 @@ class Keyboard{
                         this.bob.movingLeft = false;
                         this.bob.movingRight = false;
                         
+                        
                         this.leftKeyPressed = true;
                     }
                     else{

@@ -102,10 +102,20 @@ var Jumping = (function () {
             }
         }
         if (this.bob.movingLeft == true) {
-            this.bob.xSpeed = 5;
+            if (this.bob.x <= 0) {
+                this.bob.movingLeft = false;
+            }
+            else {
+                this.bob.xSpeed = 5;
+            }
         }
         else if (this.bob.movingRight == true) {
-            this.bob.xSpeed = -5;
+            if (this.bob.x >= document.getElementById("container").clientWidth - this.bob.width) {
+                this.bob.movingRight = false;
+            }
+            else {
+                this.bob.xSpeed = -5;
+            }
         }
         else {
             this.bob.xSpeed = 0;
@@ -204,10 +214,20 @@ var Running = (function () {
     }
     Running.prototype.move = function () {
         if (this.bob.movingLeft == true) {
-            this.bob.xSpeed = 5;
+            if (this.bob.x <= 0) {
+                this.bob.movingLeft = false;
+            }
+            else {
+                this.bob.xSpeed = 5;
+            }
         }
         else if (this.bob.movingRight == true) {
-            this.bob.xSpeed = -5;
+            if (this.bob.x >= document.getElementById("container").clientWidth - this.bob.width) {
+                this.bob.movingRight = false;
+            }
+            else {
+                this.bob.xSpeed = -5;
+            }
         }
         else {
             this.bob.xSpeed = 0;
