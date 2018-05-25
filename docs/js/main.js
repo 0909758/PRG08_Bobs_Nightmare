@@ -32,17 +32,28 @@ var Bob = (function (_super) {
     Bob.prototype.move = function () {
         if (this.facingLeft == true) {
             this.behaviour.move();
-            this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(1)";
+            if (this.finalForm != "bob")
+                this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(1)";
+            else
+                this.div.style.transform = "translate(" + this.x + "px, " + (this.y - 20) + "px) scaleX(1)";
         }
         else {
             this.behaviour.move();
-            this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(-1)";
+            if (this.finalForm != "bob")
+                this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(-1)";
+            else
+                this.div.style.transform = "translate(" + this.x + "px, " + (this.y - 20) + "px) scaleX(-1)";
         }
-        console.log(this.finalForm);
     };
     Bob.prototype.die = function () {
         var g = Game.getInstance();
         g.endGame();
+    };
+    Bob.prototype.transform = function () {
+        this.div.style.backgroundImage = "url(\'../docs/images/bobs_final_form.png\')";
+        this.gravity = 0.5;
+        this.div.style.width = "85px";
+        this.div.style.height = "95px";
     };
     return Bob;
 }(GameObject));
@@ -158,7 +169,6 @@ var Keyboard = (function () {
                 }
                 break;
             case this.b:
-                console.log('b pressed');
                 if (this.bob.finalForm == "" || this.bob.finalForm == "bo")
                     this.bob.finalForm += "b";
                 break;
@@ -197,6 +207,10 @@ var Keyboard = (function () {
                     this.bob.movingRight = false;
                     this.rightKeyPressed = false;
                 }
+                break;
+            case this.b:
+                if (this.bob.finalForm == "bob")
+                    this.bob.transform();
                 break;
         }
     };

@@ -62,7 +62,6 @@ class Keyboard{
                     }
                     break;
                 case this.b:
-                    console.log('b pressed')
                     if (this.bob.finalForm == "" || this.bob.finalForm == "bo")
                         this.bob.finalForm += "b";
                     break;
@@ -106,6 +105,10 @@ class Keyboard{
 
                         this.rightKeyPressed = false;
                     }
+                    break;
+                case this.b:
+                    if(this.bob.finalForm == "bob")
+                        this.bob.transform();
                     break;
             }
     }
