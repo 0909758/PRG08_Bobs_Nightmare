@@ -1,13 +1,8 @@
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var GameObject = (function () {
     function GameObject(tag, parent, width, height, x, y, xSpeed, ySpeed) {
         this.div = document.createElement(tag);
@@ -25,14 +20,14 @@ var GameObject = (function () {
 var Bob = (function (_super) {
     __extends(Bob, _super);
     function Bob() {
-        var _this = _super.call(this, "bob", document.getElementById("container"), 55, 66, 650, 500, 0, 0) || this;
-        _this.gravity = 1;
-        _this.jumping = false;
-        _this.facingLeft = true;
-        _this.movingLeft = false;
-        _this.movingRight = false;
-        _this.behaviour = new Running(_this);
-        return _this;
+        _super.call(this, "bob", document.getElementById("container"), 55, 66, 650, 500, 0, 0);
+        this.gravity = 1;
+        this.jumping = false;
+        this.facingLeft = true;
+        this.movingLeft = false;
+        this.movingRight = false;
+        this.finalForm = "";
+        this.behaviour = new Running(this);
     }
     Bob.prototype.move = function () {
         if (this.facingLeft == true) {
@@ -43,6 +38,7 @@ var Bob = (function (_super) {
             this.behaviour.move();
             this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(-1)";
         }
+        console.log(this.finalForm);
     };
     Bob.prototype.die = function () {
         var g = Game.getInstance();
@@ -53,7 +49,7 @@ var Bob = (function (_super) {
 var Car = (function (_super) {
     __extends(Car, _super);
     function Car() {
-        return _super.call(this, "car", document.getElementById("container"), 145, 50, 25, 520, 0, 0) || this;
+        _super.call(this, "car", document.getElementById("container"), 145, 50, 25, 520, 0, 0);
     }
     return Car;
 }(GameObject));
@@ -120,6 +116,8 @@ var Keyboard = (function () {
         this.upKey = 38;
         this.leftKey = 37;
         this.rightKey = 39;
+        this.b = 66;
+        this.o = 79;
         this.rightKeyPressed = false;
         this.leftKeyPressed = false;
         this.bob = b;
@@ -158,6 +156,15 @@ var Keyboard = (function () {
                     this.bob.facingLeft = false;
                     this.rightKeyPressed = true;
                 }
+                break;
+            case this.b:
+                console.log('b pressed');
+                if (this.bob.finalForm == "" || this.bob.finalForm == "bo")
+                    this.bob.finalForm += "b";
+                break;
+            case this.o:
+                if (this.bob.finalForm == "b")
+                    this.bob.finalForm += "o";
                 break;
         }
     };

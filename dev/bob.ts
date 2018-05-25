@@ -14,6 +14,9 @@ class Bob extends GameObject{
     public movingLeft:boolean = false;
     public movingRight:boolean = false;
 
+    // String to determine if Bob's final form is active
+    public finalForm:string = "";
+
     constructor(){
         super("bob", document.getElementById("container"), 55, 66, 650, 500, 0, 0);
 
@@ -29,6 +32,7 @@ class Bob extends GameObject{
             this.behaviour.move();
             this.div.style.transform = "translate("+this.x+"px, "+this.y+"px) scaleX(-1)";
         }
+        console.log(this.finalForm);
     }
 
     private die(){
