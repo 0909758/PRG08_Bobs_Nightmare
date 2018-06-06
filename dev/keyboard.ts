@@ -5,6 +5,8 @@ class Keyboard{
     private upKey:number = 38;
     private leftKey:number = 37;
     private rightKey:number = 39;
+    private b:number = 66;
+    private o:number = 79;
 
     // Variables to determine if a button is pressed at this moment or not
     private rightKeyPressed:boolean = false;
@@ -20,7 +22,6 @@ class Keyboard{
         window.addEventListener("keyup", (e:KeyboardEvent) => this.onKeyUp(e));
     }
 
-    // OMG booleans! They're everywhere!
     private onKeyDown(event:KeyboardEvent):void {
             switch(event.keyCode){
                 case this.upKey:
@@ -60,6 +61,14 @@ class Keyboard{
                         this.rightKeyPressed = true;
                     }
                     break;
+                case this.b:
+                    if (this.bob.finalForm == "" || this.bob.finalForm == "bo")
+                        this.bob.finalForm += "b";
+                    break;
+                case this.o:
+                    if (this.bob.finalForm == "b")
+                        this.bob.finalForm += "o";
+                    break;
             }
     }
 
@@ -96,6 +105,10 @@ class Keyboard{
 
                         this.rightKeyPressed = false;
                     }
+                    break;
+                case this.b:
+                    if(this.bob.finalForm == "bob")
+                        this.bob.transform();
                     break;
             }
     }

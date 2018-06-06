@@ -5,7 +5,7 @@ class Game{
     private car:Car;
     private keyboard:Keyboard;
 
-    private constructor() {
+    constructor() {
         this.bob = new Bob();
         this.car = new Car();
 
