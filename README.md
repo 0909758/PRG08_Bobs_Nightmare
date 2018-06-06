@@ -38,3 +38,6 @@ Beide overerven van gameobject.ts
 ### Composition
 Ik heb nog geen gebruik gemaakt van composition omdat ik dit nog niet nodig heb gehad.
 Dit heb ik later wel nodig omdat ik een eindbaas ga maken die een stormtrooper en een car aanmaakt. Samen vormen deze de eindbaas.
+
+## Pull request week 4
+https://github.com/LesleyKras/PRG0108Game/pull/1

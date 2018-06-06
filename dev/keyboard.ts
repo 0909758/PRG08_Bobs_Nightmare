@@ -22,7 +22,6 @@ class Keyboard{
         window.addEventListener("keyup", (e:KeyboardEvent) => this.onKeyUp(e));
     }
 
-    // OMG booleans! They're everywhere!
     private onKeyDown(event:KeyboardEvent):void {
             switch(event.keyCode){
                 case this.upKey:
