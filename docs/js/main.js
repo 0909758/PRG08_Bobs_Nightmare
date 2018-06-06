@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var GameObject = (function () {
     function GameObject(tag, parent, width, height, x, y, xSpeed, ySpeed) {
         this.div = document.createElement(tag);
@@ -20,14 +25,15 @@ var GameObject = (function () {
 var Bob = (function (_super) {
     __extends(Bob, _super);
     function Bob() {
-        _super.call(this, "bob", document.getElementById("container"), 55, 66, 650, 500, 0, 0);
-        this.gravity = 1;
-        this.jumping = false;
-        this.facingLeft = true;
-        this.movingLeft = false;
-        this.movingRight = false;
-        this.finalForm = "";
-        this.behaviour = new Running(this);
+        var _this = _super.call(this, "bob", document.getElementById("container"), 55, 66, 650, 500, 0, 0) || this;
+        _this.gravity = 1;
+        _this.jumping = false;
+        _this.facingLeft = true;
+        _this.movingLeft = false;
+        _this.movingRight = false;
+        _this.finalForm = "";
+        _this.behaviour = new Running(_this);
+        return _this;
     }
     Bob.prototype.move = function () {
         if (this.facingLeft == true) {
@@ -60,7 +66,7 @@ var Bob = (function (_super) {
 var Car = (function (_super) {
     __extends(Car, _super);
     function Car() {
-        _super.call(this, "car", document.getElementById("container"), 145, 50, 25, 520, 0, 0);
+        return _super.call(this, "car", document.getElementById("container"), 145, 50, 25, 520, 0, 0) || this;
     }
     return Car;
 }(GameObject));
@@ -109,10 +115,20 @@ var Jumping = (function () {
             }
         }
         if (this.bob.movingLeft == true) {
-            this.bob.xSpeed = 5;
+            if (this.bob.x <= 0) {
+                this.bob.movingLeft = false;
+            }
+            else {
+                this.bob.xSpeed = 5;
+            }
         }
         else if (this.bob.movingRight == true) {
-            this.bob.xSpeed = -5;
+            if (this.bob.x >= document.getElementById("container").clientWidth - this.bob.width) {
+                this.bob.movingRight = false;
+            }
+            else {
+                this.bob.xSpeed = -5;
+            }
         }
         else {
             this.bob.xSpeed = 0;
@@ -225,10 +241,20 @@ var Running = (function () {
     }
     Running.prototype.move = function () {
         if (this.bob.movingLeft == true) {
-            this.bob.xSpeed = 5;
+            if (this.bob.x <= 0) {
+                this.bob.movingLeft = false;
+            }
+            else {
+                this.bob.xSpeed = 5;
+            }
         }
         else if (this.bob.movingRight == true) {
-            this.bob.xSpeed = -5;
+            if (this.bob.x >= document.getElementById("container").clientWidth - this.bob.width) {
+                this.bob.movingRight = false;
+            }
+            else {
+                this.bob.xSpeed = -5;
+            }
         }
         else {
             this.bob.xSpeed = 0;
