@@ -14,6 +14,9 @@ class Bob extends GameObject{
     public movingLeft:boolean = false;
     public movingRight:boolean = false;
 
+    // String to determine if Bob's final form is active
+    public finalForm:string = "";
+
     constructor(){
         super("bob", document.getElementById("container"), 55, 66, 650, 500, 0, 0);
 
@@ -23,16 +26,29 @@ class Bob extends GameObject{
     public move(){
         if(this.facingLeft == true){
             this.behaviour.move();
-            this.div.style.transform = "translate("+this.x+"px, "+this.y+"px) scaleX(1)";
+            if(this.finalForm != "bob")
+                this.div.style.transform = "translate("+this.x+"px, "+this.y+"px) scaleX(1)";
+            else
+                this.div.style.transform = "translate("+this.x+"px, "+(this.y - 20) +"px) scaleX(1)";
         }
         else{
             this.behaviour.move();
-            this.div.style.transform = "translate("+this.x+"px, "+this.y+"px) scaleX(-1)";
+            if(this.finalForm != "bob")
+                this.div.style.transform = "translate("+this.x+"px, "+this.y+"px) scaleX(-1)";
+            else
+                this.div.style.transform = "translate("+this.x+"px, "+ (this.y - 20) +"px) scaleX(-1)";        
         }
     }
 
     private die(){
         let g = Game.getInstance();
         g.endGame();
+    }
+
+    public transform(){
+        this.div.style.backgroundImage = "url(\'../docs/images/bobs_final_form.png\')";
+        this.gravity = 0.5;
+        this.div.style.width = "85px";
+        this.div.style.height = "95px";
     }
 }
