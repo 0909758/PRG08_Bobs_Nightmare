@@ -41,3 +41,6 @@ Dit heb ik later wel nodig omdat ik een eindbaas ga maken die een stormtrooper e
 
 ## Pull request week 4
 https://github.com/LesleyKras/PRG0108Game/pull/1
+
+## Peer review week 6
+https://github.com/Jeremy461/PRG08_Typescript_game/issues/2
