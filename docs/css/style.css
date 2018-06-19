@@ -30,5 +30,20 @@ bob {
 
 car {
     background-image: url(../images/car.png);
-    width:145px; height: 50px;
+    width: 145px; height: 50px;
+}
+
+stormtrooper {
+    background-image: url(../images/stormtrooper.png);
+    width: 60px; height: 149px;
+}
+
+laser {
+    background-image: url(../images/laser.png);
+    width: 20px; height: 5px;
+}
+
+fish {
+    background-image: url(../images/fish.png);
+    width: 65px; height: 55px;
 }
