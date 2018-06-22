@@ -1,12 +1,13 @@
 /// <reference path="gameobject.ts" />
 
-class Fish extends GameObject{
+class Fish extends GameObject implements Observer {
     private gravity = 1;
     private jumping = false;
     
-    constructor(){
+    constructor(s:Subject){
         super("fish", document.getElementById("container"), 65, 55, 5, 520, 2, 10);
         this.ySpeed = Math.floor(Math.random() * Math.floor(4));
+        s.subscribe(this);
     }
 
     public move(bobX){
@@ -32,5 +33,9 @@ class Fish extends GameObject{
                 this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(1)";
             }
         }
+    }
+
+    notify(scoreCounter){
+        
     }
 }

@@ -65,10 +65,11 @@ var Bob = (function (_super) {
 }(GameObject));
 var Car = (function (_super) {
     __extends(Car, _super);
-    function Car() {
+    function Car(s) {
         var _this = _super.call(this, "car", document.getElementById("container"), 145, 50, 5, 520, 5, 2) || this;
         _this.moveDirection = "right";
         _this.ySpeedCounter = 0;
+        s.subscribe(_this);
         return _this;
     }
     Car.prototype.move = function () {
@@ -113,15 +114,19 @@ var Car = (function (_super) {
         this.y += this.ySpeed;
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(-1)";
     };
+    Car.prototype.notify = function (scoreCounter) {
+        this.xSpeed = 5 + scoreCounter / 10;
+    };
     return Car;
 }(GameObject));
 var Fish = (function (_super) {
     __extends(Fish, _super);
-    function Fish() {
+    function Fish(s) {
         var _this = _super.call(this, "fish", document.getElementById("container"), 65, 55, 5, 520, 2, 10) || this;
         _this.gravity = 1;
         _this.jumping = false;
         _this.ySpeed = Math.floor(Math.random() * Math.floor(4));
+        s.subscribe(_this);
         return _this;
     }
     Fish.prototype.move = function (bobX) {
@@ -148,16 +153,19 @@ var Fish = (function (_super) {
             }
         }
     };
+    Fish.prototype.notify = function (scoreCounter) {
+    };
     return Fish;
 }(GameObject));
 var Game = (function () {
     function Game() {
         var _this = this;
         this.bob = new Bob();
-        this.car = new Car();
+        this.score = new Score();
+        this.car = new Car(this.score);
         this.stormtrooper = new Stormtrooper();
-        this.laser = new Laser();
-        this.fish = new Fish();
+        this.laser = new Laser(this.score);
+        this.fish = new Fish(this.score);
         this.keyboard = new Keyboard(this.bob);
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
@@ -165,21 +173,20 @@ var Game = (function () {
         var _this = this;
         this.bob.move();
         this.car.move();
-        if (this.laser.x >= document.getElementById("container").clientWidth - this.laser.width) {
-            this.laser = new Laser();
-        }
         this.laser.move();
         this.fish.move(this.bob.x + this.bob.width / 2);
         if (Utilities.checkCollision(this.bob, this.car)) {
-            console.log("Collision!");
+            this.score.lowerScore();
         }
         if (Utilities.checkCollision(this.bob, this.laser)) {
-            console.log("Collision!");
+            this.score.lowerScore();
         }
         if (Utilities.checkCollision(this.bob, this.fish)) {
-            console.log("Collision!");
+            this.score.lowerScore();
         }
-        requestAnimationFrame(function () { return _this.gameLoop(); });
+        if (this.score.scoreCounter != 100 && this.score.scoreCounter < 100) {
+            requestAnimationFrame(function () { return _this.gameLoop(); });
+        }
     };
     Game.prototype.endGame = function () {
         console.log("Bob died! :(");
@@ -329,9 +336,10 @@ var Keyboard = (function () {
 }());
 var Laser = (function (_super) {
     __extends(Laser, _super);
-    function Laser() {
+    function Laser(s) {
         var _this = _super.call(this, "laser", document.getElementById("container"), 5, 20, 70, 445, 10, 0) || this;
         _this.ySpeed = Math.floor(Math.random() * Math.floor(4));
+        s.subscribe(_this);
         return _this;
     }
     Laser.prototype.move = function () {
@@ -340,9 +348,14 @@ var Laser = (function (_super) {
             this.y += this.ySpeed;
             this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(-1)";
             if (this.x >= document.getElementById("container").clientWidth - this.width) {
-                this.div.remove();
+                this.x = 70;
+                this.y = 445;
+                this.ySpeed = Math.floor(Math.random() * Math.floor(4));
             }
         }
+    };
+    Laser.prototype.notify = function (scoreCounter) {
+        this.xSpeed = 10 + scoreCounter / 10;
     };
     return Laser;
 }(GameObject));
@@ -377,12 +390,57 @@ var Running = (function () {
     };
     return Running;
 }());
+var Score = (function (_super) {
+    __extends(Score, _super);
+    function Score() {
+        var _this = _super.call(this, "score", document.getElementById("container"), 0, 0, 0, 0, 0, 0) || this;
+        _this.observers = [];
+        _this.scoreCounter = 0;
+        var scoreElement = document.getElementsByTagName("score")[0];
+        scoreElement.innerHTML = "Survive Bob's nightmare! " + _this.scoreCounter + "%";
+        _this.countScore();
+        return _this;
+    }
+    Score.prototype.countScore = function () {
+        var score = this;
+        var scoreElement = document.getElementsByTagName("score")[0];
+        setInterval(function () {
+            score.scoreCounter++;
+            scoreElement.innerHTML = "Survive Bob's nightmare! " + score.scoreCounter + "%";
+            if (score.scoreCounter >= 100) {
+                score.scoreCounter = 100;
+                scoreElement.innerHTML = "Bob woke up!";
+            }
+            for (var _i = 0, _a = score.observers; _i < _a.length; _i++) {
+                var o = _a[_i];
+                o.notify(score.scoreCounter);
+            }
+        }, 500);
+    };
+    Score.prototype.lowerScore = function () {
+        this.scoreCounter = this.scoreCounter - 0.3;
+        this.scoreCounter = Math.round(this.scoreCounter * 10) / 10;
+        if (this.scoreCounter <= 0) {
+            this.scoreCounter = 0;
+        }
+        for (var _i = 0, _a = this.observers; _i < _a.length; _i++) {
+            var o = _a[_i];
+            o.notify(this.scoreCounter);
+        }
+    };
+    Score.prototype.subscribe = function (o) {
+        this.observers.push(o);
+    };
+    Score.prototype.unsubscribe = function (o) {
+        var index = this.observers.indexOf(o, 0);
+        this.observers.splice(index, 1);
+    };
+    return Score;
+}(GameObject));
 var Stormtrooper = (function (_super) {
     __extends(Stormtrooper, _super);
     function Stormtrooper() {
-        var _this = _super.call(this, "stormtrooper", document.getElementById("container"), 60, 149, 10, 420, 0, 0) || this;
-        _this.gunFired = false;
-        return _this;
+        return _super.call(this, "stormtrooper", document.getElementById("container"), 60, 149, 10, 420, 0, 0) || this;
     }
     return Stormtrooper;
 }(GameObject));

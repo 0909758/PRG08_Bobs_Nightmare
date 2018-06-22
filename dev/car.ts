@@ -1,11 +1,12 @@
 /// <reference path="gameobject.ts" />
 
-class Car extends GameObject{
+class Car extends GameObject implements Observer {
     moveDirection = "right";
     ySpeedCounter = 0;
 
-    constructor(){
+    constructor(s:Subject){
         super("car", document.getElementById("container"), 145, 50, 5, 520, 5, 2);
+        s.subscribe(this);
     }
 
     public move(){
@@ -52,5 +53,9 @@ class Car extends GameObject{
         this.x -= this.xSpeed;
         this.y += this.ySpeed;
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(-1)";
+    }
+
+    notify(scoreCounter){
+        this.xSpeed = 5 + scoreCounter / 10;
     }
 }
