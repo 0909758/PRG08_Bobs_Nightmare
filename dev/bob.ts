@@ -46,7 +46,7 @@ class Bob extends GameObject{
     }
 
     public transform(){
-        this.div.style.backgroundImage = "url(\'../images/bobs_final_form.png\')";
+        this.div.style.backgroundImage = "url('../images/bobs_final_form.png')";
         this.gravity = 0.5;
         this.div.style.width = "85px";
         this.div.style.height = "95px";
