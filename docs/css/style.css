@@ -35,6 +35,11 @@ bob {
     width: 55px; height: 66px;
 }
 
+bob.final-form {
+    background-image: url(../images/bobs_final_form.png);
+    width: 85px; height: 95px;
+}
+
 car {
     background-image: url(../images/car.png);
     width: 145px; height: 50px;
