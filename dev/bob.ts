@@ -47,5 +47,6 @@ class Bob extends GameObject{
 
     public transform(){
         this.gravity = 0.5;
+        this.div.className = "final-form";
     }
 }
