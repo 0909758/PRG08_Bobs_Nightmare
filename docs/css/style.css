@@ -24,13 +24,10 @@ container {
 }
 
 score {
-    position: absolute;
     text-align: center;
     color: white;
-    width: 50vw;
+    width: 100%;
     top: 20px;
-    left: 25%;
-    transform: translateX(-50%);
 }
 
 bob {
