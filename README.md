@@ -54,9 +54,17 @@ window.addEventListener("load", function() {
 
 
 ### Strategy
-De strategy pattern wordt toegepast in behaviour.ts
-running.ts en jumping.ts zijn de bijbehorende classes (behaviours).
-In bob.ts wordt er gebruik gemaakt van de behaviours.
+Het strategy pattern wordt toegepast in het bestand behaviour.ts. De Bob class gebruikt deze behaviour class om de verschillende behaviours van Bob af te handelen.
+
+```
+class Bob extends GameObject{
+    public behaviour:Behaviour;
+```
+
+Ik heb hier gekozen voor het strategy pattern omdat ik van te voren nog niet wist wat voor soort Behaviours Bob zou krijgen in de game. Het strategy pattern zorgt er voor dat je makkelijk kunt wisselen tussen verschillende behaviours en ook makkelijk een nieuwe behaviour erbij kan maken als dat nodig is.
+
+In de bestanden running.ts en jumping.ts zijn op dit moment de bestaande behaviours van Bob te vinden.
+In de Bob class wordt het wisselen van behaviour afgehandeld.
 
 ### Observer
 
