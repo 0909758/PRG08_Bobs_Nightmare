@@ -1,7 +1,5 @@
 # Bob's Nightmare
 
-![UML](Bobs_Nightmare_UML.jpeg?raw=true "UML")
-
 ## Gameplay
 
 Bob heeft een nachtmerrie en wordt aangevallen door figuren uit zijn programmeerlessen. Gebruik de pijltoetsen om alle aanvallen te ontwijken totdat Bob weer wakker is. 
@@ -17,7 +15,10 @@ Typ "bob" om Bob te transformeren in Super Saiyan Bob. Super Saiyan Bob heeft ee
 
 Speel de game op de volgende link: https://0909758.github.io/PRG08_Bobs_Nightmare/
 
-## Locatie van design patterns
+## Design patterns
+
+### UML
+![UML](Bobs_Nightmare_UML.jpeg?raw=true "UML")
 
 ### Singleton
 De Game class is een singleton. Deze staat in game.ts
