@@ -90,7 +90,7 @@ notify(scoreCounter){
 }
 ```
 
-De Score class roept deze notify functie aan bij alle observers.
+De Score class roept deze notify() method aan bij alle observers.
 
 ```
 countScore () {
