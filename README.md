@@ -22,8 +22,11 @@ Speel de game op de volgende link: https://0909758.github.io/PRG08_Bobs_Nightmar
 
 ### Singleton
 De Game class is een singleton. Deze staat in game.ts
-In main.ts wordt de game class voor het eerst aangemaakt.
-In bob.ts wordt de game singleton gebruikt in de die() functie.
+In main.ts wordt er een instantie van de game class aangemaakt.
+
+```
+test
+```
 
 ### Polymorfisme
 
