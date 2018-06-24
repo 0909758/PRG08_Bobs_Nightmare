@@ -64,10 +64,52 @@ class Bob extends GameObject{
 Ik heb hier gekozen voor het strategy pattern omdat ik van te voren nog niet wist wat voor soort behaviours Bob zou krijgen in de game. Het strategy pattern zorgt er voor dat je makkelijk kunt wisselen tussen verschillende behaviours en ook makkelijk een nieuwe behaviour erbij kan maken als dat nodig is.
 
 In de bestanden running.ts en jumping.ts zijn op dit moment de bestaande behaviours van Bob te vinden.
-In de Bob class wordt het wisselen van behaviour afgehandeld.
 
 ### Observer
+Ik heb het Observer pattern toegepast om het moeilijkheidsniveau van de game dynamisch te kunnen veranderen. Hoe hoger de score in het spel, hoe sneller de vijanden zullen bewegen.
 
+In dit geval implementeert de Score class de Subject interface. Ook maakt de Score class een array van observers aan waaraan hij later zijn scoreCounter property zal doorgeven.
+
+```
+class Score extends GameObject implements Subject {
+    observers:Observer[];
+    public scoreCounter;
+```
+
+De observers in dit geval zijn de Car class en de Laser class.
+
+```
+class Car extends GameObject implements Observer {
+```
+
+Deze 2 classes gebruiken de notify() method van de Observer interface om hun speed aan te passen aan de hand van de score die ze binnen krijgen.
+
+```
+notify(scoreCounter){
+    this.xSpeed = 5 + scoreCounter / 10;
+}
+```
+
+De Score class roept deze notify functie aan bij alle observers.
+
+```
+countScore () {
+    var score = this;
+    let scoreElement = document.getElementsByTagName("score")[0];
+
+    setInterval(function(){
+        score.scoreCounter++;
+        scoreElement.innerHTML = "Survive Bob's nightmare! " + score.scoreCounter + "%";
+        if (score.scoreCounter >= 100) {
+            score.scoreCounter = 100;
+            scoreElement.innerHTML = "Bob woke up!";
+        }
+        for(let o of score.observers){
+            o.notify(score.scoreCounter);
+        }
+    }, 500);
+}
+```
 
 ## Pull request week 4
 https://github.com/LesleyKras/PRG0108Game/pull/1
