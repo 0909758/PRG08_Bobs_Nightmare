@@ -1,6 +1,6 @@
 # Bob's Nightmare
 
-![UML](diagram.png?raw=true "UML")
+![UML](Bobs_Nightmare_UML.jpeg?raw=true "UML")
 
 ## Gameplay
 
