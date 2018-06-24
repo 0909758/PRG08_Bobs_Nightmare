@@ -8,7 +8,7 @@ Bob heeft een nachtmerrie en wordt aangevallen door figuren uit zijn programmeer
 Als Bob bijna wakker is zullen de vijanden steeds sneller reageren. 
 Als Bob geraakt wordt door een vijand blijft hij langer in zijn nachtmerrie vastzitten (en de snelheid van de vijanden neemt weer iets af).
 
-### EPISCHE CHEAT CODE 
+### CHEAT CODE 
 Typ "bob" om Bob te transformeren in Super Saiyan Bob. Super Saiyan Bob heeft een hogere springafstand dan normale Bob.
 
 ## Installatie
