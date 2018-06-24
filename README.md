@@ -29,6 +29,7 @@ class Game{
 ```
 
 Ook heeft de game class een method: public static getInstance().
+
 ```
 public static getInstance(){
     if (!Game.instance){
@@ -38,7 +39,16 @@ public static getInstance(){
 }
 ```
 
-In main.ts wordt er een instantie van de game class aangemaakt.
+Deze method zorgt er voor dat de Game class een referentie naar zichzelf kan maken en zorgt er ook voor dat er maar 1 instance van de Game class aanwezig kan zijn.
+
+In het bestand main.ts wordt de getInstance() method aangeroepen om het spel te starten.
+
+```
+ // load
+window.addEventListener("load", function() {
+    let g = Game.getInstance();
+});
+```
 
 ### Polymorfisme
 
