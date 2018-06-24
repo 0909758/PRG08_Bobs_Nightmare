@@ -97,6 +97,44 @@ class Car extends GameObject implements Observer {
 
 Op deze manier heb je verschillende objecten die allemaal een GameObject zijn, maar wel verschillende waarden kunnen hebben.
 
+Een ander voorbeeld van polymorfisme is het gebruik van method overloading in de Score class.
+
+```
+// countScore method overloading
+countScore ();
+countScore (collision: string);
+countScore (collision?) {
+    if (collision == "collision") {
+        this.scoreCounter = this.scoreCounter - 0.3;
+        this.scoreCounter = Math.round(this.scoreCounter * 10) / 10;
+        if (this.scoreCounter <= 0) {
+            this.scoreCounter = 0;
+        }
+        for(let o of this.observers){
+            o.notify(this.scoreCounter);
+        }
+    }
+    else {
+        var score = this;
+        let scoreElement = document.getElementsByTagName("score")[0];
+
+        setInterval(function(){
+            score.scoreCounter++;
+            scoreElement.innerHTML = "Survive Bob's nightmare! " + score.scoreCounter + "%";
+            if (score.scoreCounter >= 100) {
+                score.scoreCounter = 100;
+                scoreElement.innerHTML = "Bob woke up!";
+            }
+            for(let o of score.observers){
+                o.notify(score.scoreCounter);
+            }
+        }, 500);
+    }
+}
+```
+
+Deze method kan op 2 manieren gebruikt worden. Als de method wordt gebruikt zonder parameter, dan zal hij de scoreCounter starten. Als er de parameter "collision" wordt meegegeven, dan zal de method de score verminderen.
+
 ### Strategy
 Het strategy pattern wordt toegepast in het bestand behaviour.ts. De Bob class gebruikt deze behaviour class om de verschillende behaviours van Bob af te handelen.
 
