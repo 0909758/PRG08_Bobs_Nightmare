@@ -21,12 +21,23 @@ Speel de game op de volgende link: https://0909758.github.io/PRG08_Bobs_Nightmar
 ![UML](Bobs_Nightmare_UML.jpeg?raw=true "UML")
 
 ### Singleton
-De Game class is een singleton, deze is te vinden in het game.ts bestand. Ik heb een singleton gebruikt voor de game class omdat ik maar 1 instantie van de game class wil hebben. De game class werkt daarom de property: private static instance:Game
+De Game class is een singleton, deze is te vinden in het game.ts bestand. Ik heb een singleton gebruikt voor de game class omdat ik maar 1 instantie van de game class wil hebben. De game class heeft daarom de property: private static instance:Game.
 
 ```
 class Game{
     private static instance:Game;
 ```
+
+Ook heeft de game class een method: public static getInstance().
+```
+public static getInstance(){
+    if (!Game.instance){
+        this.instance = new Game();
+    }
+    return Game.instance;
+}
+```
+
 In main.ts wordt er een instantie van de game class aangemaakt.
 
 ### Polymorfisme
