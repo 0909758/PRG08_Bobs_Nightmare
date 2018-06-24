@@ -33,13 +33,13 @@ class Game{
 
         // Collision checks to reduce game score
         if(Utilities.checkCollision(this.bob, this.car)){
-            this.score.lowerScore();
+            this.score.countScore("collision");
         }
         if(Utilities.checkCollision(this.bob, this.laser)){
-            this.score.lowerScore();
+            this.score.countScore("collision");
         }
         if(Utilities.checkCollision(this.bob, this.fish)){
-            this.score.lowerScore();
+            this.score.countScore("collision");
         }
         if (this.score.scoreCounter != 100 && this.score.scoreCounter < 100) {
             requestAnimationFrame(() => this.gameLoop());

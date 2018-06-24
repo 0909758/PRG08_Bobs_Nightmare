@@ -11,31 +11,35 @@ class Score extends GameObject implements Subject {
         this.countScore();
     }
 
-    countScore () {
-        var score = this;
-        let scoreElement = document.getElementsByTagName("score")[0];
-        
-        setInterval(function(){
-            score.scoreCounter++;
-            scoreElement.innerHTML = "Survive Bob's nightmare! " + score.scoreCounter + "%";
-            if (score.scoreCounter >= 100) {
-                score.scoreCounter = 100;
-                scoreElement.innerHTML = "Bob woke up!";
+    // countScore method overloading
+    countScore ();
+    countScore (collision: string);
+    countScore (collision?) {
+        if (collision == "collision") {
+            this.scoreCounter = this.scoreCounter - 0.3;
+            this.scoreCounter = Math.round(this.scoreCounter * 10) / 10;
+            if (this.scoreCounter <= 0) {
+                this.scoreCounter = 0;
             }
-            for(let o of score.observers){
-                o.notify(score.scoreCounter);
+            for(let o of this.observers){
+                o.notify(this.scoreCounter);
             }
-        }, 500);
-    }
-
-    lowerScore () {
-        this.scoreCounter = this.scoreCounter - 0.3;
-        this.scoreCounter = Math.round(this.scoreCounter * 10) / 10;
-        if (this.scoreCounter <= 0) {
-            this.scoreCounter = 0;
         }
-        for(let o of this.observers){
-            o.notify(this.scoreCounter);
+        else {
+            var score = this;
+            let scoreElement = document.getElementsByTagName("score")[0];
+            
+            setInterval(function(){
+                score.scoreCounter++;
+                scoreElement.innerHTML = "Survive Bob's nightmare! " + score.scoreCounter + "%";
+                if (score.scoreCounter >= 100) {
+                    score.scoreCounter = 100;
+                    scoreElement.innerHTML = "Bob woke up!";
+                }
+                for(let o of score.observers){
+                    o.notify(score.scoreCounter);
+                }
+            }, 500);
         }
     }
 

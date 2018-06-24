@@ -174,13 +174,13 @@ var Game = (function () {
         this.laser.move();
         this.fish.move(this.bob.x + this.bob.width / 2);
         if (Utilities.checkCollision(this.bob, this.car)) {
-            this.score.lowerScore();
+            this.score.countScore("collision");
         }
         if (Utilities.checkCollision(this.bob, this.laser)) {
-            this.score.lowerScore();
+            this.score.countScore("collision");
         }
         if (Utilities.checkCollision(this.bob, this.fish)) {
-            this.score.lowerScore();
+            this.score.countScore("collision");
         }
         if (this.score.scoreCounter != 100 && this.score.scoreCounter < 100) {
             requestAnimationFrame(function () { return _this.gameLoop(); });
@@ -399,31 +399,33 @@ var Score = (function (_super) {
         _this.countScore();
         return _this;
     }
-    Score.prototype.countScore = function () {
-        var score = this;
-        var scoreElement = document.getElementsByTagName("score")[0];
-        setInterval(function () {
-            score.scoreCounter++;
-            scoreElement.innerHTML = "Survive Bob's nightmare! " + score.scoreCounter + "%";
-            if (score.scoreCounter >= 100) {
-                score.scoreCounter = 100;
-                scoreElement.innerHTML = "Bob woke up!";
+    Score.prototype.countScore = function (collision) {
+        if (collision == "collision") {
+            this.scoreCounter = this.scoreCounter - 0.3;
+            this.scoreCounter = Math.round(this.scoreCounter * 10) / 10;
+            if (this.scoreCounter <= 0) {
+                this.scoreCounter = 0;
             }
-            for (var _i = 0, _a = score.observers; _i < _a.length; _i++) {
+            for (var _i = 0, _a = this.observers; _i < _a.length; _i++) {
                 var o = _a[_i];
-                o.notify(score.scoreCounter);
+                o.notify(this.scoreCounter);
             }
-        }, 500);
-    };
-    Score.prototype.lowerScore = function () {
-        this.scoreCounter = this.scoreCounter - 0.3;
-        this.scoreCounter = Math.round(this.scoreCounter * 10) / 10;
-        if (this.scoreCounter <= 0) {
-            this.scoreCounter = 0;
         }
-        for (var _i = 0, _a = this.observers; _i < _a.length; _i++) {
-            var o = _a[_i];
-            o.notify(this.scoreCounter);
+        else {
+            var score = this;
+            var scoreElement_1 = document.getElementsByTagName("score")[0];
+            setInterval(function () {
+                score.scoreCounter++;
+                scoreElement_1.innerHTML = "Survive Bob's nightmare! " + score.scoreCounter + "%";
+                if (score.scoreCounter >= 100) {
+                    score.scoreCounter = 100;
+                    scoreElement_1.innerHTML = "Bob woke up!";
+                }
+                for (var _i = 0, _a = score.observers; _i < _a.length; _i++) {
+                    var o = _a[_i];
+                    o.notify(score.scoreCounter);
+                }
+            }, 500);
         }
     };
     Score.prototype.subscribe = function (o) {
