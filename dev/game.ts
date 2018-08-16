@@ -9,7 +9,7 @@ class Game{
     private fish:Fish;
     private keyboard:Keyboard;
 
-    constructor() {
+    private constructor() {
         this.bob = new Bob();
         this.score = new Score();
         this.car = new Car(this.score);
@@ -34,6 +34,7 @@ class Game{
         // Collision checks to reduce game score
         if(Utilities.checkCollision(this.bob, this.car)){
             this.score.countScore("collision");
+            this.car.carBehaviour = new Turbo(this.car);
         }
         if(Utilities.checkCollision(this.bob, this.laser)){
             this.score.countScore("collision");

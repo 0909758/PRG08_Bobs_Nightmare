@@ -68,55 +68,67 @@ var Car = (function (_super) {
         _this.moveDirection = "right";
         _this.ySpeedCounter = 0;
         s.subscribe(_this);
+        _this.carBehaviour = new Driving(_this);
         return _this;
     }
     Car.prototype.move = function () {
-        if (this.ySpeed == 2) {
-            this.ySpeedCounter++;
-            if (this.ySpeedCounter == 2) {
-                this.ySpeed = -2;
-                this.ySpeedCounter = 0;
-            }
-        }
-        else {
-            this.ySpeedCounter++;
-            if (this.ySpeedCounter == 2) {
-                this.ySpeed = 2;
-                this.ySpeedCounter = 0;
-            }
-        }
-        if (this.moveDirection == "right") {
-            if (this.x < document.getElementById("container").clientWidth - this.width) {
-                this.moveRight();
-            }
-            if (this.x >= document.getElementById("container").clientWidth - this.width) {
-                this.moveDirection = "left";
-            }
-        }
-        if (this.moveDirection == "left") {
-            if (this.x > 0) {
-                this.moveLeft();
-            }
-            if (this.x <= 0) {
-                this.moveDirection = "right";
-            }
-        }
+        this.carBehaviour.move();
     };
-    Car.prototype.moveRight = function () {
-        this.x += this.xSpeed;
-        this.y += this.ySpeed;
-        this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(1)";
-    };
-    Car.prototype.moveLeft = function () {
-        this.x -= this.xSpeed;
-        this.y += this.ySpeed;
-        this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(-1)";
+    Car.prototype.turbo = function () {
     };
     Car.prototype.notify = function (scoreCounter) {
         this.xSpeed = 5 + scoreCounter / 10;
     };
     return Car;
 }(GameObject));
+var Driving = (function () {
+    function Driving(c) {
+        this.car = c;
+    }
+    Driving.prototype.move = function () {
+        if (this.car.ySpeed == 2) {
+            this.car.ySpeedCounter++;
+            if (this.car.ySpeedCounter == 2) {
+                this.car.ySpeed = -2;
+                this.car.ySpeedCounter = 0;
+            }
+        }
+        else {
+            this.car.ySpeedCounter++;
+            if (this.car.ySpeedCounter == 2) {
+                this.car.ySpeed = 2;
+                this.car.ySpeedCounter = 0;
+            }
+        }
+        if (this.car.moveDirection == "right") {
+            if (this.car.x < document.getElementById("container").clientWidth - this.car.width) {
+                this.moveRight();
+            }
+            if (this.car.x >= document.getElementById("container").clientWidth - this.car.width) {
+                this.car.moveDirection = "left";
+            }
+        }
+        if (this.car.moveDirection == "left") {
+            if (this.car.x > 0) {
+                this.moveLeft();
+            }
+            if (this.car.x <= 0) {
+                this.car.moveDirection = "right";
+            }
+        }
+    };
+    Driving.prototype.moveRight = function () {
+        this.car.x += this.car.xSpeed;
+        this.car.y += this.car.ySpeed;
+        this.car.div.style.transform = "translate(" + this.car.x + "px, " + this.car.y + "px) scaleX(1)";
+    };
+    Driving.prototype.moveLeft = function () {
+        this.car.x -= this.car.xSpeed;
+        this.car.y += this.car.ySpeed;
+        this.car.div.style.transform = "translate(" + this.car.x + "px, " + this.car.y + "px) scaleX(-1)";
+    };
+    return Driving;
+}());
 var Fish = (function (_super) {
     __extends(Fish, _super);
     function Fish(s) {
@@ -175,6 +187,7 @@ var Game = (function () {
         this.fish.move(this.bob.x + this.bob.width / 2);
         if (Utilities.checkCollision(this.bob, this.car)) {
             this.score.countScore("collision");
+            this.car.carBehaviour = new Turbo(this.car);
         }
         if (Utilities.checkCollision(this.bob, this.laser)) {
             this.score.countScore("collision");
@@ -444,6 +457,58 @@ var Stormtrooper = (function (_super) {
     }
     return Stormtrooper;
 }(GameObject));
+var Turbo = (function () {
+    function Turbo(c) {
+        this.car = c;
+    }
+    Turbo.prototype.move = function () {
+        if (this.car.ySpeed == 2) {
+            this.car.ySpeedCounter++;
+            if (this.car.ySpeedCounter == 2) {
+                this.car.ySpeed = -2;
+                this.car.ySpeedCounter = 0;
+            }
+        }
+        else {
+            this.car.ySpeedCounter++;
+            if (this.car.ySpeedCounter == 2) {
+                this.car.ySpeed = 2;
+                this.car.ySpeedCounter = 0;
+            }
+        }
+        if (this.car.moveDirection == "right") {
+            if (this.car.x < document.getElementById("container").clientWidth - this.car.width) {
+                this.turboRight();
+            }
+            if (this.car.x >= document.getElementById("container").clientWidth - this.car.width) {
+                this.car.moveDirection = "left";
+                this.car.carBehaviour = new Driving(this.car);
+            }
+        }
+        if (this.car.moveDirection == "left") {
+            if (this.car.x > 0) {
+                this.turboLeft();
+            }
+            if (this.car.x <= 0) {
+                this.car.moveDirection = "right";
+                this.car.carBehaviour = new Driving(this.car);
+            }
+        }
+    };
+    Turbo.prototype.turboRight = function () {
+        this.car.xSpeed = 15;
+        this.car.x += this.car.xSpeed;
+        this.car.y += this.car.ySpeed;
+        this.car.div.style.transform = "translate(" + this.car.x + "px, " + (this.car.y + -30) + "px) scaleX(1) rotate(-45deg)";
+    };
+    Turbo.prototype.turboLeft = function () {
+        this.car.xSpeed = 15;
+        this.car.x -= this.car.xSpeed;
+        this.car.y += this.car.ySpeed;
+        this.car.div.style.transform = "translate(" + this.car.x + "px, " + (this.car.y + -30) + "px) scaleX(-1) rotate(-45deg)";
+    };
+    return Turbo;
+}());
 var Utilities = (function () {
     function Utilities() {
     }
