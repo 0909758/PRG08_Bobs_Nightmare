@@ -74,8 +74,6 @@ var Car = (function (_super) {
     Car.prototype.move = function () {
         this.carBehaviour.move();
     };
-    Car.prototype.turbo = function () {
-    };
     Car.prototype.notify = function (scoreCounter) {
         this.xSpeed = 5 + scoreCounter / 10;
     };

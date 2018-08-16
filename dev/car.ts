@@ -15,9 +15,6 @@ class Car extends GameObject implements Observer {
         this.carBehaviour.move();
     }
 
-    public turbo():void {
-    }
-
     notify(scoreCounter){
         this.xSpeed = 5 + scoreCounter / 10;
     }
