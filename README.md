@@ -1,5 +1,17 @@
 # Bob's Nightmare
 
+## Herkansing
+### Singleton
+Feedback: constructor niet private.
+
+De constructor van de Game class is nu private.
+
+### Polymorfisme
+Feedback: niet toegepast, uitgelegd als inheritance.
+
+### Strategy
+Feedback: heeft geen zin als de character alsnog een property heeft voor jumping en running.
+
 ## Gameplay
 
 Bob heeft een nachtmerrie en wordt aangevallen door figuren uit zijn programmeerlessen. Gebruik de pijltoetsen om alle aanvallen te ontwijken totdat Bob weer wakker is. 
