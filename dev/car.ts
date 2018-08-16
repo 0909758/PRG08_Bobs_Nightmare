@@ -16,7 +16,6 @@ class Car extends GameObject implements Observer {
     }
 
     public turbo():void {
-        
     }
 
     notify(scoreCounter){

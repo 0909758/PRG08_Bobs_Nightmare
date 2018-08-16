@@ -81,6 +81,54 @@ var Car = (function (_super) {
     };
     return Car;
 }(GameObject));
+var Driving = (function () {
+    function Driving(c) {
+        this.car = c;
+    }
+    Driving.prototype.move = function () {
+        if (this.car.ySpeed == 2) {
+            this.car.ySpeedCounter++;
+            if (this.car.ySpeedCounter == 2) {
+                this.car.ySpeed = -2;
+                this.car.ySpeedCounter = 0;
+            }
+        }
+        else {
+            this.car.ySpeedCounter++;
+            if (this.car.ySpeedCounter == 2) {
+                this.car.ySpeed = 2;
+                this.car.ySpeedCounter = 0;
+            }
+        }
+        if (this.car.moveDirection == "right") {
+            if (this.car.x < document.getElementById("container").clientWidth - this.car.width) {
+                this.moveRight();
+            }
+            if (this.car.x >= document.getElementById("container").clientWidth - this.car.width) {
+                this.car.moveDirection = "left";
+            }
+        }
+        if (this.car.moveDirection == "left") {
+            if (this.car.x > 0) {
+                this.moveLeft();
+            }
+            if (this.car.x <= 0) {
+                this.car.moveDirection = "right";
+            }
+        }
+    };
+    Driving.prototype.moveRight = function () {
+        this.car.x += this.car.xSpeed;
+        this.car.y += this.car.ySpeed;
+        this.car.div.style.transform = "translate(" + this.car.x + "px, " + this.car.y + "px) scaleX(1)";
+    };
+    Driving.prototype.moveLeft = function () {
+        this.car.x -= this.car.xSpeed;
+        this.car.y += this.car.ySpeed;
+        this.car.div.style.transform = "translate(" + this.car.x + "px, " + this.car.y + "px) scaleX(-1)";
+    };
+    return Driving;
+}());
 var Fish = (function (_super) {
     __extends(Fish, _super);
     function Fish(s) {
@@ -409,6 +457,58 @@ var Stormtrooper = (function (_super) {
     }
     return Stormtrooper;
 }(GameObject));
+var Turbo = (function () {
+    function Turbo(c) {
+        this.car = c;
+    }
+    Turbo.prototype.move = function () {
+        if (this.car.ySpeed == 2) {
+            this.car.ySpeedCounter++;
+            if (this.car.ySpeedCounter == 2) {
+                this.car.ySpeed = -2;
+                this.car.ySpeedCounter = 0;
+            }
+        }
+        else {
+            this.car.ySpeedCounter++;
+            if (this.car.ySpeedCounter == 2) {
+                this.car.ySpeed = 2;
+                this.car.ySpeedCounter = 0;
+            }
+        }
+        if (this.car.moveDirection == "right") {
+            if (this.car.x < document.getElementById("container").clientWidth - this.car.width) {
+                this.turboRight();
+            }
+            if (this.car.x >= document.getElementById("container").clientWidth - this.car.width) {
+                this.car.moveDirection = "left";
+                this.car.carBehaviour = new Driving(this.car);
+            }
+        }
+        if (this.car.moveDirection == "left") {
+            if (this.car.x > 0) {
+                this.turboLeft();
+            }
+            if (this.car.x <= 0) {
+                this.car.moveDirection = "right";
+                this.car.carBehaviour = new Driving(this.car);
+            }
+        }
+    };
+    Turbo.prototype.turboRight = function () {
+        this.car.xSpeed = 15;
+        this.car.x += this.car.xSpeed;
+        this.car.y += this.car.ySpeed;
+        this.car.div.style.transform = "translate(" + this.car.x + "px, " + (this.car.y + -30) + "px) scaleX(1) rotate(-45deg)";
+    };
+    Turbo.prototype.turboLeft = function () {
+        this.car.xSpeed = 15;
+        this.car.x -= this.car.xSpeed;
+        this.car.y += this.car.ySpeed;
+        this.car.div.style.transform = "translate(" + this.car.x + "px, " + (this.car.y + -30) + "px) scaleX(-1) rotate(-45deg)";
+    };
+    return Turbo;
+}());
 var Utilities = (function () {
     function Utilities() {
     }
