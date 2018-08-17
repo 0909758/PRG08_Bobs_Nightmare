@@ -23,4 +23,6 @@ class GameObject{
         // Set the first position of a new game object
         this.div.style.transform = "translate("+this.x+"px, "+this.y+"px)";
     }
+
+    public move() {}
 }

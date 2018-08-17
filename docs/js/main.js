@@ -20,6 +20,7 @@ var GameObject = (function () {
         parent.appendChild(this.div);
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     }
+    GameObject.prototype.move = function () { };
     return GameObject;
 }());
 var Bob = (function (_super) {
@@ -129,15 +130,17 @@ var Driving = (function () {
 }());
 var Fish = (function (_super) {
     __extends(Fish, _super);
-    function Fish(s) {
+    function Fish(s, bob) {
         var _this = _super.call(this, "fish", document.getElementById("container"), 65, 55, 5, 520, 2, 10) || this;
         _this.gravity = 1;
         _this.jumping = false;
         _this.ySpeed = Math.floor(Math.random() * Math.floor(4));
+        _this.bob = bob;
         s.subscribe(_this);
         return _this;
     }
-    Fish.prototype.move = function (bobX) {
+    Fish.prototype.move = function () {
+        var bobX = this.bob.x + this.bob.width / 2;
         if (this.x < document.getElementById("container").clientWidth - this.width) {
             if (this.jumping == false) {
                 this.ySpeed = 10;
@@ -168,21 +171,22 @@ var Fish = (function (_super) {
 var Game = (function () {
     function Game() {
         var _this = this;
-        this.bob = new Bob();
         this.score = new Score();
+        this.gameObjectsArray = new Array();
+        this.bob = new Bob();
         this.car = new Car(this.score);
         this.stormtrooper = new Stormtrooper();
         this.laser = new Laser(this.score);
-        this.fish = new Fish(this.score);
+        this.fish = new Fish(this.score, this.bob);
+        this.gameObjectsArray.push(this.bob, this.car, this.stormtrooper, this.laser, this.fish);
         this.keyboard = new Keyboard(this.bob);
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
     Game.prototype.gameLoop = function () {
         var _this = this;
-        this.bob.move();
-        this.car.move();
-        this.laser.move();
-        this.fish.move(this.bob.x + this.bob.width / 2);
+        this.gameObjectsArray.forEach(function (element) {
+            element.move();
+        });
         if (Utilities.checkCollision(this.bob, this.car)) {
             this.score.countScore("collision");
             this.car.carBehaviour = new Turbo(this.car);
@@ -196,9 +200,6 @@ var Game = (function () {
         if (this.score.scoreCounter != 100 && this.score.scoreCounter < 100) {
             requestAnimationFrame(function () { return _this.gameLoop(); });
         }
-    };
-    Game.prototype.endGame = function () {
-        console.log("Bob died! :(");
     };
     Game.getInstance = function () {
         if (!Game.instance) {
