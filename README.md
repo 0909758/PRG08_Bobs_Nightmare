@@ -64,7 +64,7 @@ this.gameObjectsArray.forEach(element => {
 });
 ```
 
-Deze move() method kan voor ieder GameObject andere logica bevatten. Zo zal de Car heen en weer rijden en af en toe zijn Turbo aanzetten, maar de Fish zal bijvoorbeeld weer Bob volgen.
+Deze move() method kan voor ieder GameObject andere logica bevatten. Zo zal de Car heen en weer rijden en af en toe zijn Turbo aanzetten, de Fish zal Bob volgen en de Laser zal richting willekeurige hoogtes afschieten.
 
 ### Strategy
 Feedback: heeft geen zin als de character alsnog een property heeft voor jumping en running.
