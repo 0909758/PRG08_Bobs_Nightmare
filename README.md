@@ -4,13 +4,67 @@
 ### Singleton
 Feedback: constructor niet private.
 
+Uitwerking:
 De constructor van de Game class is nu private.
 
 ### Polymorfisme
 Feedback: niet toegepast, uitgelegd als inheritance.
 
+Uitwerking:
+
+
 ### Strategy
 Feedback: heeft geen zin als de character alsnog een property heeft voor jumping en running.
+
+Uitwerking:
+Om het strategy pattern nog een keer goed uit te werken heb ik dit toegepast door middel van de CarBehaviour interface. Hiermee geef ik de Car class de mogelijkheid om 2 verschillende behaviours uit te voeren. Deze behaviours zijn Driving en Turbo.
+
+```
+interface CarBehaviour {
+    car:Car;
+
+    move():void;
+}
+```
+
+```
+class Driving implements CarBehaviour {
+    public car:Car;
+
+    constructor(c:Car) {
+        this.car = c;
+    }
+
+    public move():void {
+    ...
+    }
+```
+
+```
+class Turbo implements CarBehaviour {
+    public car:Car;
+
+    constructor(c:Car) {
+        this.car = c;
+    }
+
+    public move():void {
+    ...
+    }
+```
+
+```
+class Car extends GameObject implements Observer {
+    public carBehaviour:CarBehaviour;
+    moveDirection = "right";
+    ySpeedCounter = 0;
+
+    constructor(s:Subject){
+        super("car", document.getElementById("container"), 145, 50, 5, 520, 5, 2);
+        s.subscribe(this);
+        this.carBehaviour = new Driving(this);
+    }
+```
 
 ## Gameplay
 
