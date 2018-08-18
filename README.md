@@ -64,7 +64,30 @@ class Car extends GameObject implements Observer {
         s.subscribe(this);
         this.carBehaviour = new Driving(this);
     }
+    
+    public move():void {
+        this.carBehaviour.move();
+    }
 ```
+
+De standaard behaviour van de Car is Driving, maar na een collision met Bob zal de Car tijdelijk zijn Turbo aanzetten.
+
+```
+private gameLoop(){
+        // Calling bob's move function to keep checking if he's moving or not
+        this.gameObjectsArray.forEach(element => {
+            element.move();
+        });
+
+        // Collision checks to reduce game score
+        if(Utilities.checkCollision(this.bob, this.car)){
+            this.score.countScore("collision");
+            // Active the Car's tubo after a collision with Bob
+            this.car.carBehaviour = new Turbo(this.car);
+        }
+```
+
+Nu staat alle logica netjes verwerkt in de juiste behaviours van de Car. 
 
 ## Gameplay
 
