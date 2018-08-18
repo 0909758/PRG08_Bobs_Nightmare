@@ -7,7 +7,7 @@ Feedback: constructor niet private.
 Uitwerking:
 De constructor van de Game class is nu private.
 
-### Polymorfisme
+### Polymorphism
 Feedback: niet toegepast, uitgelegd als inheritance.
 
 Uitwerking:
