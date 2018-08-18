@@ -11,7 +11,60 @@ De constructor van de Game class is nu private.
 Feedback: niet toegepast, uitgelegd als inheritance.
 
 Uitwerking:
+Polymorfisme heb ik toegepast op de GameObject class. De GameObject heeft een move() method. Deze move() method gebruik ik om ieder GameObject een vorm van movement te geven. 
 
+```
+class GameObject{
+    public div:HTMLElement;
+    public width:number;
+    public height:number;
+    public x:number;
+    public y:number;
+    public xSpeed:number;
+    public ySpeed:number;
+
+    // width & height in this contructor are pixel sizes of the images (see style.css). 
+    // I use these pixel width's and heights to detect collision in utilities.ts.
+    constructor(tag:string, parent:HTMLElement, width:number, height:number, x:number, y:number, xSpeed:number, ySpeed:number){
+        this.div = document.createElement(tag);
+        this.width = width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
+        this.xSpeed = xSpeed;
+        this.ySpeed = ySpeed;
+
+        parent.appendChild(this.div);
+
+        // Set the first position of a new game object
+        this.div.style.transform = "translate("+this.x+"px, "+this.y+"px)";
+    }
+
+    public move() {}
+}
+```
+
+In de Game class maak ik een GameObjectsArray aan waarin ik alle GameObjecten in het spel kan opslaan.
+
+```
+this.gameObjectsArray = new Array();
+this.bob = new Bob();
+this.car = new Car(this.score);
+this.stormtrooper = new Stormtrooper();
+this.laser = new Laser(this.score);
+this.fish = new Fish(this.score, this.bob);
+this.gameObjectsArray.push(this.bob, this.car, this.stormtrooper, this.laser, this.fish);
+```
+
+Hierdoor kan ik makkelijk in 1 keer alle move() methods van de GameObjecten aanroepen in de game loop.
+
+```
+this.gameObjectsArray.forEach(element => {
+    element.move();
+});
+```
+
+Deze move() method kan voor ieder GameObject andere logica bevatten. Zo zal de Car heen en weer rijden en af en toe zijn Turbo aanzetten, maar de Fish zal bijvoorbeeld weer Bob volgen.
 
 ### Strategy
 Feedback: heeft geen zin als de character alsnog een property heeft voor jumping en running.
