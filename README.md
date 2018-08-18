@@ -140,7 +140,7 @@ private gameLoop(){
         }
 ```
 
-Nu staat alle logica netjes verwerkt in de juiste behaviours van de Car. 
+Deze keer staat alle logica netjes verwerkt in de juiste behaviours van de Car en zit er geen movement logica meer in de Car class zelf. 
 
 ## Gameplay
 
