@@ -1,6 +1,6 @@
 # Bob's Nightmare
 
-## Herkansing
+## Herkansing: Week 0
 ### Singleton
 Feedback: constructor niet private.
 
